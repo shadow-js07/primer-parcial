@@ -1,0 +1,21 @@
+name: Despliegue a surge.sh
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Install dependencies
+              run: npm install 
+            - name: Deploy to surge
+              env:
+                SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+              run: |
+                npx surge ./src JeisonRosario.surge.sh --token $SURGE_TOKEN
